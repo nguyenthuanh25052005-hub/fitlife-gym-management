@@ -1,78 +1,110 @@
 ﻿
-10. Testing and Deployment
-1. Tổng quan
+# 10. Testing and Deployment
 
-Dự án dự kiến áp dụng kiểm thử và CI/CD cơ bản để đảm bảo chất lượng mã nguồn.
+## 1. Tổng quan
 
-2. Công cụ kiểm thử
-Công cụMục đích
-JestUnit test
-SupertestIntegration test REST API
-ESLintKiểm tra chất lượng code
-GitHub ActionsChạy test/lint tự động
-3. Test dự kiến
+Dự án FitLife dự kiến áp dụng kiểm thử và CI/CD cơ bản để đảm bảo chất lượng mã nguồn, độ ổn định API và tính nhất quán của quá trình phát triển.
 
-Các module cần test:
+## 2. Công cụ kiểm thử và kiểm tra chất lượng
 
-Auth API.
-Plans API.
-Membership API.
-Schedule API.
-Payment API.
-4. Test cases dự kiến
-NhómTest case
-AuthRegister thành công
-AuthKhông cho register email trùng
-AuthLogin thành công
-AuthLogin sai password
-AuthGET /auth/me với token hợp lệ
-PlansXem danh sách gói
-PlansAdmin tạo gói
-PlansMember không được tạo gói
-MembershipMember đăng ký gói
-MembershipKhông đăng ký gói inactive
-ScheduleMember đặt lịch
-ScheduleKhông cho đặt lịch trùng trainer
-ScheduleTrainer xác nhận lịch
-5. Lệnh chạy test dự kiến
+| Công cụ | Mục đích |
+|---|---|
+| Jest | Viết và chạy unit test |
+| Supertest | Kiểm thử REST API |
+| ESLint | Kiểm tra chất lượng code |
+| GitHub Actions | Tự động chạy test và lint |
+
+## 3. Test cases dự kiến
+
+### Auth
+
+| Test case | Kỳ vọng |
+|---|---|
+| Register thành công | Tạo user mới với role mặc định là member |
+| Register email trùng | Trả lỗi phù hợp, không tạo user mới |
+| Login thành công | Trả token JWT và thông tin user |
+| Login sai password | Trả lỗi xác thực |
+| GET `/auth/me` với token hợp lệ | Trả đúng thông tin người dùng hiện tại |
+
+### Plans
+
+| Test case | Kỳ vọng |
+|---|---|
+| Xem danh sách gói | Trả danh sách plan đang hoạt động |
+| Admin tạo gói | Tạo plan thành công |
+| Member không được tạo gói | Trả lỗi phân quyền |
+
+### Membership
+
+| Test case | Kỳ vọng |
+|---|---|
+| Member đăng ký gói | Tạo membership và payment mô phỏng |
+| Không đăng ký gói inactive | Trả lỗi hợp lệ |
+
+### Schedule
+
+| Test case | Kỳ vọng |
+|---|---|
+| Member đặt lịch | Tạo schedule trạng thái `pending` |
+| Không cho đặt lịch trùng trainer | Trả lỗi trùng lịch |
+| Trainer xác nhận lịch | Chuyển trạng thái sang `confirmed` |
+
+## 4. Lệnh chạy test
+
+```bash
 cd backend
 npm test
-6. Lệnh chạy lint dự kiến
+```
+
+## 5. Lệnh chạy lint
+
+```bash
 cd backend
 npm run lint
-7. Coverage mục tiêu
+```
 
-Mục tiêu Level 1:
+## 6. Coverage mục tiêu
 
-Coverage >= 70%
-Test pass rate = 100%
-8. GitHub Actions dự kiến
+| Metric | Mục tiêu |
+|---|---|
+| Coverage | >= 70% |
+| Test pass rate | 100% |
 
-File:
+## 7. GitHub Actions workflow dự kiến
 
+File workflow dự kiến:
+
+```text
 .github/workflows/ci.yml
+```
 
-Workflow dự kiến:
+Luồng chạy dự kiến:
 
-checkout
-setup node
-npm install
-npm run lint
-npm test
-9. Deployment
+| Bước | Mô tả |
+|---|---|
+| Checkout | Lấy mã nguồn từ repository |
+| Setup Node | Cài đặt phiên bản Node.js phù hợp |
+| Install dependencies | Chạy `npm install` |
+| Lint | Chạy `npm run lint` |
+| Test | Chạy `npm test` |
 
-Level 1 chưa bắt buộc deploy thật. Nếu triển khai, có thể dùng:
+## 8. Deployment
 
-Render.
-Railway.
-Vercel cho frontend static.
-GitHub Pages cho frontend nếu tách riêng.
-10. SPQM metrics
-MetricMục tiêu
-Test pass rate100%
-Coverage>= 70%
-API response time< 500ms
-Bug countGiảm qua sprint
-Commit countCó commit theo sprint
-PR countCó PR cho module chính
-Issue countCó issue tracking nếu cần
+Ở giai đoạn tài liệu ban đầu, Level 1 chưa bắt buộc deploy thật. Nếu cần triển khai thử nghiệm, có thể cân nhắc:
+
+- Render cho backend.
+- Railway cho backend.
+- Vercel cho frontend static.
+- GitHub Pages nếu frontend tách riêng.
+
+## 9. SPQM metrics
+
+| Metric | Mục tiêu |
+|---|---|
+| Test pass rate | 100% |
+| Coverage | >= 70% |
+| API response time | < 500ms |
+| Bug count | Giảm dần qua sprint |
+| Commit count | Có commit theo sprint |
+| PR count | Có PR cho module chính |
+| Issue count | Có issue tracking nếu cần |
