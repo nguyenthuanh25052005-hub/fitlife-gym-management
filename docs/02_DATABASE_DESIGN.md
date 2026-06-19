@@ -7,6 +7,8 @@ Database dự kiến của FitLife sẽ dùng SQLite cho Level 1. Lựa chọn n
 
 Thiết kế dưới đây là thiết kế dự kiến, có thể điều chỉnh nhẹ trong quá trình triển khai backend để phù hợp với code thực tế và luồng nghiệp vụ sau cùng.
 
+Các bảng được mô tả theo hướng đơn giản, dễ đọc và đủ dùng cho nghiệp vụ cốt lõi của đề tài 05.
+
 ## 2. Danh sách bảng dự kiến
 
 - `users`

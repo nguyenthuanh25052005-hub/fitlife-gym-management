@@ -83,7 +83,7 @@ Level 3 là phần nâng cao mang tính mở rộng, chủ yếu dùng để tha
 Theo định hướng SPQM của đề tài 05, FitLife cần thể hiện rõ hai trọng tâm:
 
 - L12: SMART-Q.
-- L13: Đo lường.
+- L13: Đo lường và theo dõi chỉ số chất lượng.
 
 ### 8.1. SMART-Q dự kiến
 

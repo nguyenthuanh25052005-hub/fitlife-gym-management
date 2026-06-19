@@ -5,6 +5,8 @@
 
 Hệ thống FitLife dự kiến áp dụng mô hình phân quyền theo vai trò RBAC để kiểm soát quyền truy cập API và giao diện. Thiết kế này giúp tách biệt rõ trách nhiệm giữa Admin, Member và Trainer, đồng thời giảm rủi ro truy cập sai chức năng.
 
+RBAC sẽ được dùng xuyên suốt ở backend và đồng bộ với luồng hiển thị của frontend trong các sprint sau.
+
 Ba vai trò chính gồm:
 
 - Admin
