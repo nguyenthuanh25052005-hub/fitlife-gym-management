@@ -1,10 +1,13 @@
 ﻿
-09. Frontend Guide
-1. Tổng quan
+# 09. Frontend Guide
 
-Frontend dự kiến sử dụng HTML, CSS và JavaScript thuần. Giao diện sẽ gọi REST API từ backend bằng fetch.
+## 1. Tổng quan frontend
 
-2. Cấu trúc frontend dự kiến
+Frontend dự kiến sử dụng HTML, CSS và JavaScript thuần. Giao diện sẽ gọi REST API từ backend bằng `fetch`, đồng thời lưu token đăng nhập để dùng cho các trang cần xác thực.
+
+## 2. Cấu trúc frontend dự kiến
+
+```text
 frontend/
 ├── index.html
 ├── login.html
@@ -20,24 +23,33 @@ frontend/
     ├── member.js
     ├── admin.js
     └── trainer.js
-3. Các trang chính
-TrangMục đích
-index.htmlTrang giới thiệu, xem gói tập
-register.htmlĐăng ký member
-login.htmlĐăng nhập
-member-dashboard.htmlDashboard hội viên
-admin-dashboard.htmlDashboard admin
-trainer-dashboard.htmlDashboard trainer
-4. Gọi API bằng fetch
+```
 
-Ví dụ dự kiến:
+## 3. Các trang chính
 
+| Trang | Mục đích |
+|---|---|
+| `index.html` | Trang giới thiệu dự án và xem gói tập |
+| `register.html` | Trang đăng ký member |
+| `login.html` | Trang đăng nhập |
+| `member-dashboard.html` | Dashboard dành cho hội viên |
+| `admin-dashboard.html` | Dashboard dành cho admin |
+| `trainer-dashboard.html` | Dashboard dành cho trainer |
+
+## 4. Cách gọi API bằng `fetch`
+
+Frontend dự kiến gọi API theo kiểu sau:
+
+```js
 const response = await fetch("http://localhost:3000/api/plans");
 const data = await response.json();
-5. Gửi token
+```
 
-Các API cần đăng nhập sẽ gửi token:
+## 5. Cách gửi token `Authorization`
 
+Các API cần đăng nhập sẽ gửi token trong header `Authorization`:
+
+```js
 const token = localStorage.getItem("token");
 
 fetch("http://localhost:3000/api/auth/me", {
@@ -45,36 +57,59 @@ fetch("http://localhost:3000/api/auth/me", {
     Authorization: `Bearer ${token}`
   }
 });
-6. Lưu token
+```
 
-Sau khi login thành công:
+## 6. Cách lưu token vào `localStorage`
 
+Sau khi login thành công, frontend dự kiến lưu token và thông tin user như sau:
+
+```js
 localStorage.setItem("token", data.token);
 localStorage.setItem("user", JSON.stringify(data.user));
-7. Điều hướng theo role
+```
 
-Sau khi login:
+## 7. Điều hướng theo role
 
-admin   -> admin-dashboard.html
-member  -> member-dashboard.html
-trainer -> trainer-dashboard.html
-8. Chức năng member dashboard
-Xem thông tin cá nhân.
-Xem danh sách gói tập.
-Đăng ký gói tập.
-Xem trainer.
-Đặt lịch tập.
-Xem lịch cá nhân.
-9. Chức năng admin dashboard
-Quản lý gói tập.
-Xem membership.
-Xem payment.
-Xem schedule.
-Quản lý trainer.
-10. Chức năng trainer dashboard
-Xem lịch dạy.
-Xác nhận lịch.
-Cập nhật trạng thái lịch.
-11. Ghi chú
+Sau khi login, frontend sẽ chuyển hướng theo role:
 
-Frontend chưa được triển khai ở giai đoạn tài liệu ban đầu. File này sẽ được cập nhật sau khi giao diện hoàn thành.
+| Role | Trang đích |
+|---|---|
+| Admin | `admin-dashboard.html` |
+| Member | `member-dashboard.html` |
+| Trainer | `trainer-dashboard.html` |
+
+## 8. Chức năng của từng dashboard
+
+### Member Dashboard
+
+| Chức năng | Mô tả |
+|---|---|
+| Xem thông tin cá nhân | Hiển thị hồ sơ và trạng thái tài khoản |
+| Xem danh sách gói tập | Xem các plan đang hoạt động |
+| Đăng ký gói tập | Chọn plan và gửi yêu cầu subscribe |
+| Xem trainer | Xem danh sách huấn luyện viên |
+| Đặt lịch tập | Tạo lịch với trainer phù hợp |
+| Xem lịch cá nhân | Theo dõi các buổi tập đã đặt |
+
+### Admin Dashboard
+
+| Chức năng | Mô tả |
+|---|---|
+| Quản lý gói tập | Thêm, sửa, xóa hoặc vô hiệu hóa plan |
+| Xem membership | Theo dõi các đăng ký gói tập |
+| Xem payment | Xem các payment mô phỏng |
+| Xem schedule | Quản lý toàn bộ lịch tập |
+| Quản lý trainer | Thêm, sửa, xóa trainer |
+
+### Trainer Dashboard
+
+| Chức năng | Mô tả |
+|---|---|
+| Xem lịch dạy | Xem các buổi tập được gán cho trainer |
+| Xác nhận lịch | Chuyển lịch từ pending sang confirmed |
+| Cập nhật trạng thái lịch | Đổi trạng thái sang completed hoặc cancelled khi phù hợp |
+
+## 9. Ghi chú
+
+- Frontend chưa được triển khai ở giai đoạn tài liệu ban đầu.
+- Mô tả trong tài liệu này là dự kiến và sẽ được cập nhật khi giao diện được tạo ở các sprint sau.

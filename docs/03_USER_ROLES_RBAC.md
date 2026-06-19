@@ -1,82 +1,97 @@
 ﻿
-03. User Roles & RBAC
-1. Tổng quan
+# 03. User Roles & RBAC
 
-Hệ thống FitLife sử dụng phân quyền theo vai trò RBAC để kiểm soát quyền truy cập API và giao diện.
+## 1. Tổng quan
 
-Có 3 vai trò chính:
+Hệ thống FitLife dự kiến áp dụng mô hình phân quyền theo vai trò RBAC để kiểm soát quyền truy cập API và giao diện. Thiết kế này giúp tách biệt rõ trách nhiệm giữa Admin, Member và Trainer, đồng thời giảm rủi ro truy cập sai chức năng.
 
-Admin
-Member
-Trainer
-2. Admin
+RBAC sẽ được dùng xuyên suốt ở backend và đồng bộ với luồng hiển thị của frontend trong các sprint sau.
 
-Admin là người quản lý hệ thống phòng gym.
+Ba vai trò chính gồm:
 
-Quyền dự kiến
-Đăng nhập.
-Quản lý gói tập.
-Quản lý hội viên.
-Quản lý trainer.
-Xem toàn bộ lịch tập.
-Xem danh sách đăng ký gói tập.
-Xem danh sách thanh toán.
-Cập nhật dữ liệu hệ thống.
-3. Member
+- Admin
+- Member
+- Trainer
+
+## 2. Role Admin
+
+Admin là người quản lý toàn bộ hệ thống phòng gym.
+
+### Quyền dự kiến
+
+- Đăng nhập hệ thống.
+- Quản lý gói tập.
+- Quản lý hội viên.
+- Quản lý trainer.
+- Xem toàn bộ lịch tập.
+- Xem danh sách đăng ký gói tập.
+- Xem danh sách thanh toán.
+- Cập nhật dữ liệu hệ thống.
+
+## 3. Role Member
 
 Member là hội viên sử dụng dịch vụ phòng gym.
 
-Quyền dự kiến
-Đăng ký tài khoản.
-Đăng nhập.
-Xem gói tập.
-Đăng ký gói tập.
-Xem trainer.
-Đặt lịch tập.
-Xem lịch tập cá nhân.
-Xem thanh toán của mình.
-4. Trainer
+### Quyền dự kiến
+
+- Đăng ký tài khoản.
+- Đăng nhập hệ thống.
+- Xem danh sách gói tập.
+- Đăng ký gói tập.
+- Xem danh sách trainer.
+- Đặt lịch tập.
+- Xem lịch tập cá nhân.
+- Xem thanh toán của mình.
+
+## 4. Role Trainer
 
 Trainer là huấn luyện viên của phòng gym.
 
-Quyền dự kiến
-Đăng nhập.
-Xem lịch dạy cá nhân.
-Xác nhận lịch tập.
-Cập nhật trạng thái buổi tập.
-5. Bảng phân quyền
-Chức năngAdminMemberTrainer
-Đăng ký tài khoảnKhôngCóKhông
-Đăng nhậpCóCóCó
-Xem gói tậpCóCóCó
-Thêm gói tậpCóKhôngKhông
-Sửa gói tậpCóKhôngKhông
-Xóa gói tậpCóKhôngKhông
-Đăng ký gói tậpKhôngCóKhông
-Xem membership cá nhânKhôngCóKhông
-Xem tất cả membershipCóKhôngKhông
-Xem trainerCóCóCó
-Đặt lịch tậpKhôngCóKhông
-Xem lịch cá nhânKhôngCóCó
-Xem toàn bộ lịchCóKhôngKhông
-Cập nhật trạng thái lịchCóKhôngCó
-Xem payment cá nhânKhôngCóKhông
-Xem tất cả paymentCóKhôngKhông
-6. Cách kiểm soát quyền
+### Quyền dự kiến
 
-Backend dự kiến dùng:
+- Đăng nhập hệ thống.
+- Xem lịch dạy cá nhân.
+- Xác nhận lịch tập.
+- Cập nhật trạng thái buổi tập.
 
-Middleware authenticateToken để kiểm tra JWT.
-Middleware authorizeRoles để kiểm tra role.
+## 5. Bảng phân quyền dự kiến
 
-Ví dụ dự kiến:
+| Chức năng | Admin | Member | Trainer |
+|---|---:|---:|---:|
+| Đăng ký tài khoản | Không | Có | Không |
+| Đăng nhập | Có | Có | Có |
+| Xem gói tập | Có | Có | Có |
+| Thêm gói tập | Có | Không | Không |
+| Sửa gói tập | Có | Không | Không |
+| Xóa gói tập | Có | Không | Không |
+| Đăng ký gói tập | Không | Có | Không |
+| Xem membership cá nhân | Không | Có | Không |
+| Xem tất cả membership | Có | Không | Không |
+| Xem trainer | Có | Có | Có |
+| Đặt lịch tập | Không | Có | Không |
+| Xem lịch cá nhân | Không | Có | Có |
+| Xem toàn bộ lịch | Có | Không | Không |
+| Cập nhật trạng thái lịch | Có | Không | Có |
+| Xem payment cá nhân | Không | Có | Không |
+| Xem tất cả payment | Có | Không | Không |
 
-GET /api/auth/me              -> cần đăng nhập
-POST /api/plans               -> chỉ admin
-POST /api/schedules           -> chỉ member
-PUT /api/schedules/:id/status -> trainer hoặc admin
-7. Nguyên tắc bảo mật
-Không lưu mật khẩu dạng plain text.
-Không trả password_hash về frontend.
-Token cần được gửi qua header Authorization.
-API quan trọng phải kiểm tra role.
+## 6. Cách kiểm soát quyền dự kiến
+
+Backend dự kiến sẽ dùng:
+
+- Middleware `authenticateToken` để kiểm tra JWT.
+- Middleware `authorizeRoles` để kiểm tra role.
+
+Ví dụ kiểm soát quyền dự kiến:
+
+- `GET /api/auth/me` cần đăng nhập.
+- `POST /api/plans` chỉ dành cho Admin.
+- `POST /api/schedules` chỉ dành cho Member.
+- `PUT /api/schedules/:id/status` dành cho Trainer hoặc Admin.
+
+## 7. Nguyên tắc bảo mật dự kiến
+
+- Không lưu mật khẩu dạng plain text.
+- Không trả `password_hash` về frontend.
+- Token dự kiến được gửi qua header `Authorization`.
+- API quan trọng phải kiểm tra đăng nhập và role trước khi xử lý.

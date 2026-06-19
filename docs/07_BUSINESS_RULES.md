@@ -1,57 +1,90 @@
 ﻿
-07. Business Rules
-1. Quy tắc tài khoản
-Email không được trùng.
-Mật khẩu phải được mã hóa bằng bcryptjs.
-User đăng ký từ frontend mặc định có role là member.
-Role admin và trainer nên được tạo bằng seed data hoặc do admin quản lý.
-2. Quy tắc đăng nhập
-Người dùng phải nhập đúng email và password.
-Nếu hợp lệ, backend trả về JWT token.
-Frontend lưu token trong localStorage.
-Các API cần xác thực phải gửi token qua Authorization header.
-3. Quy tắc gói tập
-Chỉ admin được thêm, sửa, xóa gói tập.
-Người dùng chỉ xem được các gói có status active.
-Xóa gói tập nên là soft delete bằng cách đổi status sang inactive.
-Không cho member đăng ký gói inactive.
-4. Quy tắc đăng ký gói tập
-Member phải đăng nhập.
-Plan phải tồn tại.
-Plan phải active.
-Khi đăng ký thành công:
-Tạo record trong memberships.
-Tạo start_date là ngày hiện tại.
-Tạo end_date dựa theo duration_days.
-Tạo payment mô phỏng.
-5. Quy tắc thanh toán mô phỏng
-Level 1 chưa tích hợp cổng thanh toán thật.
-Khi đăng ký gói, hệ thống tạo payment với trạng thái paid để mô phỏng thành công.
-Admin có thể xem danh sách payment.
-Member chỉ xem payment của chính mình.
-6. Quy tắc đặt lịch trainer
-Member phải đăng nhập.
-Member phải có membership active.
-Trainer phải tồn tại.
-Không được đặt lịch có thời gian kết thúc nhỏ hơn hoặc bằng thời gian bắt đầu.
-Không được đặt lịch trùng với lịch đã có của trainer trong cùng ngày và khung giờ.
-7. Quy tắc trạng thái lịch
+# 07. Business Rules
 
-Trạng thái lịch gồm:
+## 1. Quy tắc tài khoản
 
-StatusÝ nghĩa
-pendingLịch mới tạo, chờ xác nhận
-confirmedTrainer đã xác nhận
-completedBuổi tập đã hoàn thành
-cancelledLịch đã bị hủy
-8. Quy tắc phân quyền
-Admin có quyền quản lý toàn bộ.
-Member chỉ thao tác trên dữ liệu cá nhân.
-Trainer chỉ xem và cập nhật lịch liên quan đến mình.
-API phải kiểm tra role trước khi xử lý nghiệp vụ quan trọng.
-9. Quy tắc chất lượng
-Mỗi module backend quan trọng cần có test.
-API lỗi phải trả message rõ ràng.
-Không trả password_hash về frontend.
-Code phải qua ESLint.
-Pull Request phải được kiểm tra trước khi merge.
+| Quy tắc | Mô tả |
+|---|---|
+| Email không được trùng | Mỗi user chỉ được dùng một email duy nhất trong hệ thống |
+| Mật khẩu phải được mã hóa | Password dự kiến sẽ được hash bằng bcryptjs trước khi lưu |
+| Role mặc định khi đăng ký | User đăng ký từ frontend mặc định có role `member` |
+| Role admin và trainer | Dự kiến được tạo bằng seed data hoặc do admin quản lý |
+
+## 2. Quy tắc đăng nhập
+
+| Quy tắc | Mô tả |
+|---|---|
+| Xác thực thông tin | Người dùng phải nhập đúng email và password |
+| Phát hành token | Nếu hợp lệ, backend sẽ trả JWT token |
+| Lưu token | Frontend sẽ lưu token trong `localStorage` |
+| Gửi token khi gọi API | Các API cần xác thực sẽ gửi token qua header `Authorization` |
+
+## 3. Quy tắc gói tập
+
+| Quy tắc | Mô tả |
+|---|---|
+| Quyền quản lý | Chỉ Admin được thêm, sửa, xóa gói tập |
+| Trạng thái hiển thị | Người dùng chỉ xem các gói có trạng thái `active` |
+| Xóa gói | Dự kiến dùng soft delete bằng cách đổi `status` sang `inactive` |
+| Đăng ký gói | Member không được đăng ký gói `inactive` |
+
+## 4. Quy tắc đăng ký gói tập
+
+| Quy tắc | Mô tả |
+|---|---|
+| Điều kiện người dùng | Member phải đăng nhập |
+| Điều kiện plan | Plan phải tồn tại |
+| Trạng thái plan | Plan phải ở trạng thái `active` |
+| Tạo membership | Khi đăng ký thành công, backend tạo record trong `memberships` |
+| Tạo ngày hiệu lực | `start_date` là ngày hiện tại, `end_date` dựa theo `duration_days` |
+| Tạo payment | Backend tạo payment mô phỏng sau khi đăng ký |
+
+## 5. Quy tắc thanh toán mô phỏng
+
+| Quy tắc | Mô tả |
+|---|---|
+| Chưa tích hợp cổng thanh toán | Level 1 chưa dùng payment gateway thật |
+| Trạng thái mặc định | Khi đăng ký gói, hệ thống dự kiến tạo payment với trạng thái `paid` |
+| Quyền xem payment | Admin xem tất cả payment, Member chỉ xem payment của chính mình |
+
+## 6. Quy tắc đặt lịch trainer
+
+| Quy tắc | Mô tả |
+|---|---|
+| Điều kiện người đặt | Member phải đăng nhập |
+| Điều kiện membership | Member phải có membership `active` |
+| Điều kiện trainer | Trainer phải tồn tại |
+| Hợp lệ thời gian | `end_time` phải lớn hơn `start_time` |
+| Chống trùng lịch | Không đặt lịch trùng với lịch đã có của trainer trong cùng ngày và khung giờ |
+
+## 7. Quy tắc trạng thái lịch
+
+| Status | Ý nghĩa |
+|---|---|
+| `pending` | Lịch mới tạo, chờ xác nhận |
+| `confirmed` | Trainer đã xác nhận |
+| `completed` | Buổi tập đã hoàn thành |
+| `cancelled` | Lịch đã bị hủy |
+
+## 8. Quy tắc phân quyền
+
+| Vai trò | Quyền chính |
+|---|---|
+| Admin | Quản lý toàn bộ hệ thống, dữ liệu và các trạng thái quan trọng |
+| Member | Chỉ thao tác trên dữ liệu cá nhân và các luồng đăng ký/đặt lịch của mình |
+| Trainer | Chỉ xem và cập nhật các lịch liên quan đến mình |
+
+| Quy tắc | Mô tả |
+|---|---|
+| Kiểm tra role | API phải kiểm tra role trước khi xử lý các nghiệp vụ quan trọng |
+| Kiểm tra token | Các API bảo vệ phải xác thực JWT trước khi cho phép truy cập |
+
+## 9. Quy tắc chất lượng
+
+| Quy tắc | Mô tả |
+|---|---|
+| Test cho module quan trọng | Mỗi module backend quan trọng cần có test |
+| Thông báo lỗi rõ ràng | API lỗi phải trả message dễ hiểu và nhất quán |
+| Bảo mật dữ liệu | Không trả `password_hash` về frontend |
+| Kiểm tra lint | Code phải đi qua ESLint |
+| Kiểm tra PR | Pull Request phải được rà soát trước khi merge |
