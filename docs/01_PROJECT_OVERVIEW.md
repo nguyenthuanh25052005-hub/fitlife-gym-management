@@ -1,94 +1,121 @@
 ﻿
-01. Tổng quan dự án
-1. Tên dự án
+# 01. Tổng quan dự án
+
+## 1. Tên dự án
 
 FitLife Gym Management System.
 
-2. Đề tài
+## 2. Đề tài
 
 Đề tài số 05: Quản lý phòng gym và lịch tập.
 
-3. Bối cảnh
+## 3. Bối cảnh
 
-Nhiều phòng gym nhỏ vẫn quản lý hội viên, gói tập, lịch tập và huấn luyện viên bằng sổ tay, Excel hoặc tin nhắn cá nhân. Cách làm này dễ gây trùng lịch, khó theo dõi thời hạn gói tập, khó thống kê thanh toán và khó kiểm soát chất lượng dịch vụ.
+Nhiều phòng gym quy mô nhỏ vẫn quản lý hội viên, gói tập, lịch tập và huấn luyện viên bằng sổ tay, Excel hoặc trao đổi thủ công qua tin nhắn. Cách làm này dễ phát sinh trùng lịch, khó theo dõi trạng thái gói tập, khó tổng hợp thanh toán và khó đo lường chất lượng vận hành.
 
-FitLife được thiết kế như một hệ thống web cơ bản giúp số hóa quy trình quản lý phòng gym.
+FitLife được thiết kế như một hệ thống web dự kiến để số hóa quy trình quản lý phòng gym ở mức cơ bản, phù hợp với phạm vi đồ án và có khả năng mở rộng ở các sprint sau.
 
-4. Vấn đề cần giải quyết
-Khó quản lý danh sách hội viên.
-Khó theo dõi thời hạn gói tập.
-Dễ bị trùng lịch giữa hội viên và trainer.
-Khó tổng hợp thanh toán.
-Admin không có cái nhìn tổng quan về hoạt động phòng gym.
-Trainer khó theo dõi lịch dạy cá nhân.
-5. Mục tiêu dự án
-Xây dựng hệ thống quản lý phòng gym cơ bản.
-Thiết kế REST API cho các chức năng chính.
-Thiết kế database SQLite phù hợp với đề tài.
-Xây dựng frontend HTML/CSS/JavaScript để thao tác với hệ thống.
-Áp dụng JWT để đăng nhập và phân quyền.
-Có test bằng Jest và Supertest.
-Có CI/CD bằng GitHub Actions.
-Có tài liệu README, API, database, sprint và checklist.
-6. Đối tượng sử dụng
-Đối tượngNhu cầu
-AdminQuản lý toàn bộ hệ thống
-MemberĐăng ký gói tập, đặt lịch tập
-TrainerXem lịch dạy, xác nhận lịch
-7. Phạm vi Level 1
+## 4. Vấn đề cần giải quyết
 
-Level 1 là phạm vi chính cần hoàn thành trước:
+- Khó quản lý danh sách hội viên và trạng thái tài khoản.
+- Khó theo dõi thời hạn gói tập và lịch sử đăng ký.
+- Dễ bị trùng lịch giữa hội viên và trainer.
+- Khó thống kê thanh toán và doanh thu mô phỏng.
+- Admin chưa có cái nhìn tổng quan về hoạt động phòng gym.
+- Trainer khó theo dõi lịch dạy cá nhân và trạng thái buổi tập.
 
-Backend Node.js + Express.
-Database SQLite.
-REST API.
-JWT Authentication.
-bcryptjs để mã hóa mật khẩu.
-Jest + Supertest để test API.
-ESLint để kiểm tra chất lượng code.
-GitHub Actions CI cơ bản.
-Frontend HTML/CSS/JavaScript thuần.
-README và tài liệu dự án đầy đủ.
-8. Phạm vi Level 2
+## 5. Mục tiêu dự án
 
-Level 2 là phần mở rộng sau khi Level 1 ổn định:
+- Thiết kế hệ thống quản lý phòng gym theo hướng modular, dễ tách lớp và dễ kiểm thử.
+- Dự kiến xây dựng REST API cho các chức năng chính.
+- Dự kiến sử dụng SQLite cho Level 1 để đơn giản hóa việc cài đặt và demo.
+- Dự kiến áp dụng JWT và bcryptjs cho xác thực, phân quyền và bảo mật mật khẩu.
+- Dự kiến có test bằng Jest và Supertest để kiểm tra API.
+- Dự kiến có linting bằng ESLint và CI/CD bằng GitHub Actions.
+- Hoàn thiện bộ tài liệu phân tích, thiết kế, sprint và checklist cho đồ án.
 
-PostgreSQL.
-Docker Compose.
-SonarQube.
-Integration test.
-Quy trình Pull Request rõ ràng hơn.
-Coverage cao hơn.
-9. Phạm vi Level 3
+## 6. Đối tượng sử dụng
 
-Level 3 là phần nâng cao:
+| Đối tượng | Nhu cầu chính |
+|---|---|
+| Admin | Quản lý toàn bộ hệ thống, bao gồm gói tập, hội viên, trainer, lịch tập và thanh toán |
+| Member | Đăng ký tài khoản, chọn gói tập, đặt lịch với trainer và theo dõi lịch cá nhân |
+| Trainer | Xem lịch dạy, xác nhận lịch và cập nhật trạng thái buổi tập |
 
-Microservices.
-Redis cache.
-Load test bằng k6.
-Monitoring bằng Prometheus và Grafana.
-Quality gate tự động chặn pipeline.
-Đo lường DORA metrics.
-10. SPQM của đề tài
+## 7. Phạm vi Level 1, Level 2, Level 3
 
-Theo slide đề tài 05, trọng tâm SPQM gồm:
+### Level 1
 
-L12: SMART-Q.
-L13: Đo lường.
+Level 1 là phạm vi cốt lõi dự kiến cần hoàn thành trước để bảo đảm có thể demo được nghiệp vụ chính.
 
-Dự án cần thể hiện:
+- Backend Node.js + Express.
+- Database SQLite.
+- REST API dự kiến.
+- JWT Authentication.
+- bcryptjs để mã hóa mật khẩu.
+- Jest + Supertest để test API.
+- ESLint để kiểm tra chất lượng code.
+- GitHub Actions CI cơ bản.
+- Frontend HTML/CSS/JavaScript thuần.
+- README và tài liệu dự án đầy đủ.
 
-Mục tiêu chất lượng theo SMART-Q.
-Definition of Done cho từng sprint.
-Checklist kiểm thử.
-Baseline đo lường ban đầu.
-Metric theo dõi chất lượng.
-11. Metric đo lường dự kiến
-MetricÝ nghĩaMục tiêu
-Test pass rateTỷ lệ test chạy thành công100%
-CoverageMức độ bao phủ test>= 70%
-API response timeThời gian phản hồi API< 500ms với dữ liệu nhỏ
-Bug countSố lỗi phát hiệnGiảm qua từng sprint
-Fixed bug countSố lỗi đã sửaTăng theo sprint
-Commit countSố commitCó commit rõ ràng theo sprint
-Pull request countSố PRCó PR cho các phần chính
+### Level 2
+
+Level 2 là phần mở rộng sau khi Level 1 ổn định, tập trung vào khả năng vận hành và chuẩn hóa quy trình phát triển.
+
+- Tách module rõ hơn theo service/repository/controller.
+- Bổ sung quy trình Pull Request chi tiết hơn.
+- Tăng coverage test và bổ sung test tình huống biên.
+- Cân nhắc chuyển sang database mạnh hơn nếu phạm vi đồ án cần mở rộng.
+- Bổ sung tài liệu triển khai và hướng dẫn sử dụng chi tiết hơn.
+
+### Level 3
+
+Level 3 là phần nâng cao mang tính mở rộng, chủ yếu dùng để tham khảo định hướng phát triển lâu dài.
+
+- Tích hợp cache hoặc cơ chế tối ưu truy vấn nếu cần.
+- Bổ sung monitoring và cảnh báo.
+- Tự động hóa kiểm thử và quality gate chặt hơn.
+- Mở rộng phân tích dữ liệu vận hành và đo lường chất lượng hệ thống.
+
+## 8. SPQM của đề tài 05: L12 SMART-Q và L13 đo lường
+
+Theo định hướng SPQM của đề tài 05, FitLife cần thể hiện rõ hai trọng tâm:
+
+- L12: SMART-Q.
+- L13: Đo lường.
+
+### 8.1. SMART-Q dự kiến
+
+Mục tiêu chất lượng của dự án sẽ được mô tả theo SMART-Q, tức là:
+
+- Specific: cụ thể theo từng module và từng sprint.
+- Measurable: đo được bằng metric rõ ràng.
+- Achievable: phù hợp với thời gian và quy mô đồ án.
+- Relevant: bám sát nghiệp vụ quản lý phòng gym.
+- Time-bound: có mốc hoàn thành theo sprint.
+- Quality-oriented: tập trung vào chất lượng đầu ra, test và khả năng bảo trì.
+
+### 8.2. Đo lường dự kiến
+
+Dự án sẽ dùng các chỉ số ban đầu để theo dõi tiến độ và chất lượng:
+
+| Metric | Ý nghĩa | Mục tiêu dự kiến |
+|---|---|---|
+| Test pass rate | Tỷ lệ test chạy thành công | 100% khi chốt sprint |
+| Coverage | Mức độ bao phủ test | Từ 70% trở lên ở giai đoạn ổn định |
+| API response time | Thời gian phản hồi API | Dưới 500ms với dữ liệu nhỏ |
+| Bug count | Số lỗi phát hiện | Giảm dần qua từng sprint |
+| Fixed bug count | Số lỗi đã sửa | Tăng dần theo tiến độ |
+| Commit count | Số commit theo sprint | Có commit rõ ràng cho từng phần |
+| Pull request count | Số PR | Có PR cho các phần chính |
+
+### 8.3. Definition of Done dự kiến
+
+Một chức năng được xem là hoàn thành khi có đủ các điều kiện sau:
+
+- Có tài liệu mô tả chức năng.
+- Có code đúng theo thiết kế đã thống nhất.
+- Có test phù hợp với phạm vi chức năng.
+- Không vi phạm các quy tắc lint quan trọng.
+- Có thể demo được trong luồng sử dụng dự kiến.
