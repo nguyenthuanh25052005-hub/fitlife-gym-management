@@ -4,7 +4,6 @@
 *.db
 coverage/
 
-
 # Backend local files
 backend/.env
 backend/node_modules/
