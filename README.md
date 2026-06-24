@@ -125,7 +125,7 @@ Kết quả kiểm thử hiện tại:
 - ESLint: Passed
 - Test framework: Jest + Supertest
 - Total tests: 35 passed
-- Coverage: 76.92%
+- Coverage: 86.03%
 - GitHub Actions: Passed after database setup fix
 
 GitHub Actions workflow nằm tại:
@@ -165,8 +165,8 @@ GitHub Actions workflow nằm tại:
 - [x] Backend có API chạy được
 - [x] Frontend web có thể demo
 - [x] Test và lint được thiết lập
-- [x] Jest/Supertest tests passed: 35 tests
-- [x] Coverage đạt 76.92% >= 70%
+- [x] Jest/Supertest tests passed: 45 tests
+- [x] Coverage đạt 86.03% >= 80%
 - [x] GitHub Actions workflow có sẵn
 - [x] GitHub Actions PASS
 - [ ] Screenshot GitHub Actions PASS
@@ -195,7 +195,7 @@ GitHub Actions workflow nằm tại:
 Before final submission, the following manual items should be prepared:
 
 - Screenshot of GitHub Actions PASS
-- Screenshot of coverage report showing 76.92%
+- Screenshot of coverage report showing 86.03%
 - Screenshots of frontend web pages
 - Video demo under 5 minutes
 - Google Drive link for demo video
