@@ -5,6 +5,8 @@ const authRoutes = require("./routes/authRoutes");
 const planRoutes = require("./routes/planRoutes");
 const membershipRoutes = require("./routes/membershipRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const trainerRoutes = require("./routes/trainerRoutes");
+const scheduleRoutes = require("./routes/scheduleRoutes");
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/plans", planRoutes);
 app.use("/api/memberships", membershipRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/trainers", trainerRoutes);
+app.use("/api/schedules", scheduleRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
