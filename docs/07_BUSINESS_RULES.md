@@ -6,9 +6,9 @@
 | Quy tắc | Mô tả |
 |---|---|
 | Email không được trùng | Mỗi user chỉ được dùng một email duy nhất trong hệ thống |
-| Mật khẩu phải được mã hóa | Password dự kiến sẽ được hash bằng bcryptjs trước khi lưu |
+| Mật khẩu phải được mã hóa | Password hiện có được hash bằng bcryptjs trước khi lưu |
 | Role mặc định khi đăng ký | User đăng ký từ frontend mặc định có role `member` |
-| Role admin và trainer | Dự kiến được tạo bằng seed data hoặc do admin quản lý |
+| Role admin và trainer | Hiện có được tạo bằng seed data hoặc do admin quản lý |
 
 ## 2. Quy tắc đăng nhập
 
@@ -25,7 +25,7 @@
 |---|---|
 | Quyền quản lý | Chỉ Admin được thêm, sửa, xóa gói tập |
 | Trạng thái hiển thị | Người dùng chỉ xem các gói có trạng thái `active` |
-| Xóa gói | Dự kiến dùng soft delete bằng cách đổi `status` sang `inactive` |
+| Xóa gói | Hiện có dùng soft delete bằng cách đổi `status` sang `inactive` |
 | Đăng ký gói | Member không được đăng ký gói `inactive` |
 
 ## 4. Quy tắc đăng ký gói tập
@@ -44,7 +44,7 @@
 | Quy tắc | Mô tả |
 |---|---|
 | Chưa tích hợp cổng thanh toán | Level 1 chưa dùng payment gateway thật |
-| Trạng thái mặc định | Khi đăng ký gói, hệ thống dự kiến tạo payment với trạng thái `paid` |
+| Trạng thái mặc định | Khi đăng ký gói, hệ thống hiện có tạo payment với trạng thái `paid` |
 | Quyền xem payment | Admin xem tất cả payment, Member chỉ xem payment của chính mình |
 
 ## 6. Quy tắc đặt lịch trainer

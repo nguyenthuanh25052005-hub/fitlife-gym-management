@@ -37,7 +37,7 @@ Xây dựng nền tảng backend.
 - Khởi tạo Node.js project.
 - Cài Express, SQLite, dotenv, cors.
 - Tạo app.js và server.js.
-- Tạo schema database dự kiến.
+- Tạo schema database hiện có.
 - Tạo seed data.
 - Tạo health check API.
 
@@ -167,7 +167,7 @@ Xây dựng giao diện HTML/CSS/JS.
 
 ### Output
 
-- Frontend thao tác được với backend dự kiến.
+- Frontend thao tác được với backend hiện có.
 
 ### Definition of Done
 

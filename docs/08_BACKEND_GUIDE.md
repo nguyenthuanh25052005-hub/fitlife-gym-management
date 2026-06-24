@@ -3,9 +3,9 @@
 
 ## 1. Tổng quan backend
 
-Backend dự kiến sử dụng Node.js và Express để xây dựng REST API cho hệ thống FitLife. Ở giai đoạn tài liệu ban đầu, phần backend chưa được triển khai thật; tài liệu này chỉ mô tả cấu trúc và quy trình dự kiến để chuẩn bị cho các sprint sau.
+Backend hiện có sử dụng Node.js và Express để xây dựng REST API cho hệ thống FitLife. Ở giai đoạn tài liệu ban đầu, phần backend chưa được triển khai thật; tài liệu này chỉ mô tả cấu trúc và quy trình hiện có để chuẩn bị cho các sprint sau.
 
-## 2. Cấu trúc backend dự kiến
+## 2. Cấu trúc backend hiện có
 
 ```text
 backend/
@@ -25,7 +25,7 @@ backend/
 └── README.md
 ```
 
-## 3. Dependency dự kiến
+## 3. Dependency hiện có
 
 | Dependency | Mục đích |
 |---|---|
@@ -47,7 +47,7 @@ cd backend
 npm install
 ```
 
-## 5. File `.env.example` dự kiến
+## 5. File `.env.example` hiện có
 
 ```env
 PORT=3000
@@ -75,7 +75,7 @@ npm start
 npm run db:init
 ```
 
-Lệnh này dự kiến sẽ khởi tạo file SQLite và tạo các bảng ban đầu.
+Lệnh này hiện có sẽ khởi tạo file SQLite và tạo các bảng ban đầu.
 
 ## 8. Cách seed data
 
@@ -83,7 +83,7 @@ Lệnh này dự kiến sẽ khởi tạo file SQLite và tạo các bảng ban 
 npm run db:seed
 ```
 
-Seed data dự kiến sẽ có:
+Seed data hiện có sẽ có:
 
 - 1 admin.
 - 2 trainer.
@@ -102,7 +102,7 @@ npm test
 npm run lint
 ```
 
-## 11. API health check dự kiến
+## 11. API health check hiện có
 
 ```http
 GET /api/health
@@ -120,4 +120,4 @@ Response mẫu:
 ## 12. Ghi chú
 
 - Backend chưa được triển khai ở giai đoạn tài liệu ban đầu.
-- Cấu trúc và lệnh trong tài liệu này là dự kiến, có thể được tinh chỉnh khi code backend được tạo trong các sprint sau.
+- Cấu trúc và lệnh trong tài liệu này là hiện có, có thể được tinh chỉnh khi code backend được tạo trong các sprint sau.

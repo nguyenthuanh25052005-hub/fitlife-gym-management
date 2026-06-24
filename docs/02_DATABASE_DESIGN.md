@@ -3,13 +3,13 @@
 
 ## 1. Tổng quan
 
-Database dự kiến của FitLife sẽ dùng SQLite cho Level 1. Lựa chọn này phù hợp với đồ án vì dễ khởi tạo, không cần cài thêm database server riêng và đủ để mô phỏng nghiệp vụ quản lý phòng gym.
+Database của FitLife hiện dùng SQLite cho Level 1. Lựa chọn này phù hợp với đồ án vì dễ khởi tạo, không cần cài thêm database server riêng và đủ để mô phỏng nghiệp vụ quản lý phòng gym.
 
-Thiết kế dưới đây là thiết kế dự kiến, có thể điều chỉnh nhẹ trong quá trình triển khai backend để phù hợp với code thực tế và luồng nghiệp vụ sau cùng.
+Thiết kế dưới đây phản ánh schema đang được triển khai trong backend và dùng cho các API hiện có.
 
 Các bảng được mô tả theo hướng đơn giản, dễ đọc và đủ dùng cho nghiệp vụ cốt lõi của đề tài 05.
 
-## 2. Danh sách bảng dự kiến
+## 2. Danh sách bảng hiện có
 
 - `users`
 - `membership_plans`
@@ -35,7 +35,7 @@ Lưu thông tin tài khoản người dùng.
 
 ## 4. Bảng `membership_plans`
 
-Lưu danh sách gói tập dự kiến cung cấp cho hội viên.
+Lưu danh sách gói tập hiện có cung cấp cho hội viên.
 
 | Cột | Kiểu dữ liệu | Mô tả |
 |---|---|---|
@@ -65,7 +65,7 @@ Lưu thông tin đăng ký gói tập của hội viên.
 
 ## 6. Bảng `trainers`
 
-Lưu thông tin huấn luyện viên và thông tin chuyên môn dự kiến.
+Lưu thông tin huấn luyện viên và thông tin chuyên môn hiện có.
 
 | Cột | Kiểu dữ liệu | Mô tả |
 |---|---|---|
@@ -110,7 +110,7 @@ Lưu thông tin thanh toán mô phỏng khi member đăng ký gói tập.
 | created_at | DATETIME | Ngày tạo |
 | updated_at | DATETIME | Ngày cập nhật |
 
-## 9. Quan hệ dự kiến giữa các bảng
+## 9. Quan hệ giữa các bảng
 
 | Quan hệ | Mô tả |
 |---|---|
@@ -123,6 +123,19 @@ Lưu thông tin thanh toán mô phỏng khi member đăng ký gói tập.
 
 ## 10. Ghi chú thiết kế
 
-- Dự kiến sử dụng khóa ngoại để bảo đảm tính liên kết dữ liệu.
-- Một số ràng buộc như unique email, status mặc định hoặc trigger cập nhật thời gian có thể được tinh chỉnh khi triển khai.
+- Schema hiện đang dùng SQLite và được khởi tạo qua file schema.sql.
+- Các bảng có liên kết logic qua user_id, plan_id, membership_id, trainer_id.
 - Schema ưu tiên tính đơn giản để phục vụ demo, kiểm thử và mô phỏng nghiệp vụ của đồ án.
+
+## 11. ERD dạng Mermaid
+
+```mermaid
+erDiagram
+    USERS ||--o{ MEMBERSHIPS : has
+    MEMBERSHIP_PLANS ||--o{ MEMBERSHIPS : contains
+    USERS ||--o{ PAYMENTS : makes
+    MEMBERSHIPS ||--o{ PAYMENTS : generates
+    USERS ||--o| TRAINERS : is
+    TRAINERS ||--o{ WORKOUT_SCHEDULES : assigned
+    USERS ||--o{ WORKOUT_SCHEDULES : books
+```

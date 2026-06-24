@@ -3,7 +3,7 @@
 
 ## 1. Tổng quan
 
-File này mô tả mapping dự kiến giữa form frontend, API payload và các trường trong database. Thiết kế này áp dụng cho giai đoạn đầu của FitLife, khi backend và database vẫn đang được triển khai theo sprint.
+File này mô tả mapping hiện có giữa form frontend, API payload và các trường trong database. Thiết kế này áp dụng cho giai đoạn đầu của FitLife, khi backend và database vẫn đang được triển khai theo sprint.
 
 ## 2. Register Form
 
@@ -16,7 +16,7 @@ File này mô tả mapping dự kiến giữa form frontend, API payload và cá
 
 ### Ghi chú
 
-- `password` sẽ được hash bằng bcryptjs trước khi lưu vào database.
+- `password` được hash bằng bcryptjs trước khi lưu vào database.
 - Frontend chỉ gửi mật khẩu thô; backend tự xử lý hash.
 
 ## 3. Login Form
@@ -92,5 +92,5 @@ File này mô tả mapping dự kiến giữa form frontend, API payload và cá
 ## 8. Ghi chú triển khai
 
 - `password` chỉ xuất hiện ở phía frontend/API request, còn trong database sẽ là `password_hash`.
-- `user_id` và `member_id` dự kiến không nhập thủ công ở các form quan trọng mà sẽ lấy từ token đăng nhập.
+- `user_id` và `member_id` hiện có không nhập thủ công ở các form quan trọng mà sẽ lấy từ token đăng nhập.
 - Backend sẽ tự tạo `start_date`, `end_date` và payment khi member đăng ký gói tập.
