@@ -1,7 +1,7 @@
 ﻿
 # FitLife Gym Management System
 
-FitLife Gym Management System là hệ thống quản lý phòng gym mô phỏng với các module: hội viên, gói tập, trainer, lịch tập và thanh toán. Dự án hiện đang ở trạng thái hoàn thiện Sprint 6 với backend Node.js + Express, database SQLite, frontend HTML/CSS/JavaScript thuần và tài liệu mô tả đầy đủ cho mục đích demo, nộp bài và thuyết trình.
+FitLife Gym Management System là hệ thống quản lý phòng gym mô phỏng với các module: hội viên, gói tập, trainer, lịch tập và thanh toán. Dự án đã hoàn thành Sprint 0 đến Sprint 7 và đang ở Sprint 8 để hoàn thiện tài liệu nộp bài cuối cùng. Hệ thống hiện có backend Node.js + Express, database SQLite, frontend web HTML/CSS/JavaScript, kiểm thử Jest/Supertest, ESLint, GitHub Actions CI và tài liệu SPQM.
 
 ## 1. Trạng thái hiện tại
 - Backend: hoạt động ổn định với các API chính cho auth, plans, memberships, payments, trainers và schedules.
@@ -19,11 +19,11 @@ FitLife Gym Management System là hệ thống quản lý phòng gym mô phỏng
 - GitHub Actions CI cơ bản
 - Git workflow và docs
 
-### Level 2 – Đang/chuẩn bị mở rộng
-- Auth JWT + phân quyền
-- Workflow nghiệp vụ hoàn chỉnh
-- Review code / Pull Request
-- Quality gate nâng cao (SonarQube optional)
+### Level 2 – Hoàn thành một phần
+- Auth JWT + phân quyền: đã hoàn thành
+- Workflow nghiệp vụ chính: đã hoàn thành
+- Review code / Pull Request: đã áp dụng qua sprint branch và PR
+- Quality gate nâng cao SonarQube/SonarCloud: optional, chưa triển khai
 
 ### Level 3 – Ngoài phạm vi hiện tại
 - Microservices, Redis, load test, Prometheus/Grafana, quality gate tự động chặn pipeline
@@ -114,12 +114,24 @@ Mở thư mục frontend trong VS Code và chạy bằng Live Server hoặc mở
 | GET | /api/schedules | Admin | Xem toàn bộ lịch |
 
 ## 9. Test, lint và CI
+
 ```bash
 cd backend
 npm run lint
 npm test
 ```
-GitHub Actions workflow nằm tại .github/workflows/ci.yml.
+Kết quả kiểm thử hiện tại:
+
+- ESLint: Passed
+- Test framework: Jest + Supertest
+- Total tests: 35 passed
+- Coverage: 76.92%
+- GitHub Actions: Passed after database setup fix
+
+GitHub Actions workflow nằm tại:
+```text
+.github/workflows/ci.yml
+```
 
 ## 10. Git workflow
 - main/master: nhánh chính ổn định
@@ -151,14 +163,43 @@ GitHub Actions workflow nằm tại .github/workflows/ci.yml.
 ## 12. Checklist nộp bài
 - [x] README đầy đủ
 - [x] Backend có API chạy được
-- [x] Frontend có thể demo
+- [x] Frontend web có thể demo
 - [x] Test và lint được thiết lập
+- [x] Jest/Supertest tests passed: 35 tests
+- [x] Coverage đạt 76.92% >= 70%
 - [x] GitHub Actions workflow có sẵn
-- [ ] Screenshot SonarQube dashboard (nếu triển khai)
+- [x] GitHub Actions PASS
+- [ ] Screenshot GitHub Actions PASS
+- [ ] Screenshot coverage report
+- [ ] Screenshot giao diện web
+- [ ] Screenshot SonarQube dashboard nếu triển khai Level 2 quality gate
 - [ ] Video demo <= 5 phút
-- [ ] Báo cáo Word/PDF (nếu giảng viên yêu cầu)
+- [ ] Báo cáo Word/PDF nếu giảng viên yêu cầu
 
-## 13. Sprint 7 & Sprint 8 plan
-- Bổ sung thêm test nghiệp vụ cho membership, payment và schedule.
-- Tăng coverage trên controller phức tạp.
-- Có thể thêm SonarQube hoặc SonarCloud nếu nhóm muốn nâng cao tầng quality gate.
+## 13. Sprint completion status
+
+| Sprint | Nội dung | Trạng thái |
+|---|---|---|
+| Sprint 0 | Khởi tạo repo, README và docs | Completed |
+| Sprint 1 | Backend foundation, Express, SQLite setup | Completed |
+| Sprint 2 | Authentication, JWT, role-based access control | Completed |
+| Sprint 3 | Membership plans API | Completed |
+| Sprint 4 | Membership subscription and mock payment | Completed |
+| Sprint 5 | Trainer and schedule workflow | Completed |
+| Sprint 6 | Frontend web UI | Completed |
+| Sprint 7 | Testing, ESLint, GitHub Actions CI, SPQM docs | Completed |
+| Sprint 8 | Final documentation and submission preparation | In progress |
+
+## 14. Final manual deliverables
+
+Before final submission, the following manual items should be prepared:
+
+- Screenshot of GitHub Actions PASS
+- Screenshot of coverage report showing 76.92%
+- Screenshots of frontend web pages
+- Video demo under 5 minutes
+- Google Drive link for demo video
+- Final Word/PDF report if required by instructor
+- SonarQube/SonarCloud screenshot if Level 2 quality gate is required
+
+
