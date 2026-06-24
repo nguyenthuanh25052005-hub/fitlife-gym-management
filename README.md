@@ -1,150 +1,164 @@
 ﻿
 # FitLife Gym Management System
 
-FitLife Gym Management System là đồ án số 05 với chủ đề quản lý phòng gym và lịch tập. Repo hiện tại mới ở giai đoạn tài liệu hóa và thiết kế ban đầu; backend, database thật, REST API và frontend sẽ được triển khai dần trong các sprint tiếp theo.
+FitLife Gym Management System là hệ thống quản lý phòng gym mô phỏng với các module: hội viên, gói tập, trainer, lịch tập và thanh toán. Dự án hiện đang ở trạng thái hoàn thiện Sprint 6 với backend Node.js + Express, database SQLite, frontend HTML/CSS/JavaScript thuần và tài liệu mô tả đầy đủ cho mục đích demo, nộp bài và thuyết trình.
 
-## 1. Mục tiêu dự án
+## 1. Trạng thái hiện tại
+- Backend: hoạt động ổn định với các API chính cho auth, plans, memberships, payments, trainers và schedules.
+- Frontend: có các trang index, login, member, trainer và admin để thao tác luồng nghiệp vụ chính.
+- Testing: đã bổ sung Jest + Supertest và chạy thành công.
+- QA/CI: có ESLint và GitHub Actions cho lint + test.
+- Docs: README, hướng dẫn backend/frontend, demo script, SPQM report, checklist nộp bài đã được cập nhật.
 
-Mục tiêu của FitLife là thiết kế một hệ thống web hỗ trợ phòng gym quản lý hội viên, gói tập, huấn luyện viên, lịch tập và thanh toán mô phỏng theo hướng dễ mở rộng, dễ kiểm thử và dễ trình bày trong đồ án.
+## 2. Mức độ hoàn thành (3-Level Model)
+### Level 1 – Đã hoàn thành
+- REST API Node.js + Express
+- SQLite
+- Jest + Supertest
+- ESLint
+- GitHub Actions CI cơ bản
+- Git workflow và docs
 
-Các mục tiêu chính:
+### Level 2 – Đang/chuẩn bị mở rộng
+- Auth JWT + phân quyền
+- Workflow nghiệp vụ hoàn chỉnh
+- Review code / Pull Request
+- Quality gate nâng cao (SonarQube optional)
 
-- Quản lý thông tin người dùng theo vai trò Admin, Member và Trainer.
-- Thiết kế luồng đăng ký gói tập, đặt lịch tập và thanh toán mô phỏng.
-- Dự kiến áp dụng JWT, bcryptjs, Jest, Supertest, ESLint và GitHub Actions.
-- Xây dựng tài liệu phân tích, thiết kế và kế hoạch sprint rõ ràng.
+### Level 3 – Ngoài phạm vi hiện tại
+- Microservices, Redis, load test, Prometheus/Grafana, quality gate tự động chặn pipeline
 
-## 2. Chức năng dự kiến
+## 3. Tech stack
+- Backend: Node.js, Express, JWT, bcryptjs, SQLite
+- Frontend: HTML, CSS, JavaScript thuần
+- Testing: Jest, Supertest
+- Quality: ESLint
+- CI/CD: GitHub Actions
 
+## 4. Chức năng đã hoàn thành
 ### Admin
-
-- Đăng nhập hệ thống.
-- Quản lý gói tập.
-- Quản lý hội viên.
-- Quản lý huấn luyện viên.
-- Xem lịch tập và thanh toán.
+- Đăng nhập
+- Xem memberships
+- Xem payments
+- Xem schedules
 
 ### Member
-
-- Đăng ký và đăng nhập tài khoản.
-- Xem danh sách gói tập.
-- Đăng ký gói tập.
-- Xem danh sách trainer.
-- Đặt lịch tập với trainer.
-- Xem lịch tập và thanh toán cá nhân.
+- Đăng nhập
+- Xem plans
+- Đăng ký gói tập
+- Xem membership
+- Xem payment
+- Xem trainer
+- Đặt lịch
+- Xem lịch của mình
 
 ### Trainer
+- Đăng nhập
+- Xem lịch được phân công
+- Cập nhật trạng thái lịch: confirmed/completed/cancelled
 
-- Đăng nhập hệ thống.
-- Xem lịch dạy cá nhân.
-- Xác nhận lịch tập.
-- Cập nhật trạng thái buổi tập.
-
-## 3. Tech stack dự kiến
-
-| Thành phần | Công nghệ dự kiến |
-|---|---|
-| Backend | Node.js, Express |
-| Database | SQLite |
-| API | REST API |
-| Authentication | JWT, bcryptjs |
-| Testing | Jest, Supertest |
-| Code quality | ESLint |
-| CI/CD | GitHub Actions |
-| Frontend | HTML, CSS, JavaScript thuần |
-
-## 4. Cấu trúc thư mục hiện tại
-
+## 5. Cấu trúc thư mục
 ```text
 fitlife-gym-management/
 ├── backend/
+│   ├── src/
+│   ├── tests/
+│   └── package.json
 ├── frontend/
+│   ├── css/
+│   └── js
 ├── docs/
-├── .gitignore
+├── .github/workflows/
 └── README.md
 ```
 
-> Ghi chú: `backend/` và `frontend/` hiện mới là khung thư mục, chưa có code nghiệp vụ thực tế. Các sprint sau sẽ bổ sung dần cấu trúc triển khai chi tiết.
+## 6. Hướng dẫn chạy dự án
+### Backend
+```bash
+cd backend
+npm install
+npm run db:init
+npm run db:seed
+npm start
+```
+Backend sẽ chạy tại http://127.0.0.1:3000/api
 
-## 5. Lộ trình phát triển theo sprint
+### Frontend
+Mở thư mục frontend trong VS Code và chạy bằng Live Server hoặc mở file index.html bằng trình duyệt.
 
-| Sprint | Mục tiêu dự kiến | Kết quả mong đợi |
-|---|---|---|
-| Sprint 0 | Khởi tạo tài liệu và khung dự án | README, docs, cấu trúc repo, kế hoạch tổng quan |
-| Sprint 1 | Nền tảng backend | Cấu trúc Express, cấu hình môi trường, chuẩn bị SQLite |
-| Sprint 2 | Auth | Đăng ký, đăng nhập, JWT, bcryptjs, middleware phân quyền |
-| Sprint 3 | Membership plan | CRUD gói tập, danh sách và chi tiết gói |
-| Sprint 4 | Membership và payment | Đăng ký gói, tạo thanh toán mô phỏng, xem lịch sử |
-| Sprint 5 | Trainer và schedule | Quản lý trainer, đặt lịch, kiểm tra trùng lịch |
-| Sprint 6 | Frontend cơ bản | Giao diện HTML/CSS/JavaScript và luồng điều hướng |
-| Sprint 7 | Testing và CI/CD | Jest, Supertest, ESLint, GitHub Actions |
-| Sprint 8 | Hoàn thiện báo cáo | Rà soát tài liệu, checklist, demo và chốt đồ án |
-
-## 6. Tài liệu dự án
-
-- [01_PROJECT_OVERVIEW](docs/01_PROJECT_OVERVIEW.md)
-- [02_DATABASE_DESIGN](docs/02_DATABASE_DESIGN.md)
-- [03_USER_ROLES_RBAC](docs/03_USER_ROLES_RBAC.md)
-- [04_MODULES_AND_USECASES](docs/04_MODULES_AND_USECASES.md)
-- [05_API_DESIGN](docs/05_API_DESIGN.md)
-- [06_DATA_MAPPING](docs/06_DATA_MAPPING.md)
-- [07_BUSINESS_RULES](docs/07_BUSINESS_RULES.md)
-- [08_BACKEND_GUIDE](docs/08_BACKEND_GUIDE.md)
-- [09_FRONTEND_GUIDE](docs/09_FRONTEND_GUIDE.md)
-- [10_TESTING_AND_DEPLOYMENT](docs/10_TESTING_AND_DEPLOYMENT.md)
-- [11_GIT_WORKFLOW](docs/11_GIT_WORKFLOW.md)
-- [12_SPRINT_PLAN](docs/12_SPRINT_PLAN.md)
-- [13_FINAL_TEST_CHECKLIST](docs/13_FINAL_TEST_CHECKLIST.md)
-- [14_DEMO_SCRIPT](docs/14_DEMO_SCRIPT.md)
-- [15_REPORT_OUTLINE](docs/15_REPORT_OUTLINE.md)
-- [16_TEAM_CODE_DISTRIBUTION](docs/16_TEAM_CODE_DISTRIBUTION.md)
-
-## 7. Git workflow
-
-Dự án dự kiến dùng nhánh `main` làm nhánh chính, kết hợp các nhánh theo sprint và theo feature để dễ kiểm soát tiến độ.
-
-Nhánh tham khảo:
-
-- `main`
-- `docs/project-documentation`
-- `sprint-01-backend-foundation`
-- `sprint-02-auth-api`
-- `sprint-03-membership-plans`
-- `sprint-04-subscription-payment`
-- `sprint-05-trainer-schedule`
-- `sprint-06-frontend-ui`
-- `sprint-07-testing-ci`
-- `sprint-08-final-documentation`
-
-Quy ước commit dự kiến:
-
-- `feat`: thêm chức năng mới
-- `fix`: sửa lỗi
-- `docs`: cập nhật tài liệu
-- `test`: thêm hoặc sửa test
-- `refactor`: tối ưu code
-- `chore`: cấu hình, setup
-
-## 8. Testing và CI/CD
-
-Trong các sprint sau, dự án sẽ bổ sung:
-
-- Test API bằng Jest và Supertest.
-- Kiểm tra chất lượng code bằng ESLint.
-- Pipeline CI/CD trên GitHub Actions để chạy test và lint tự động.
-- Checklist kiểm thử và tài liệu xác nhận đầu ra từng sprint.
-
-## 9. Tài khoản demo dự kiến
-
-| Vai trò | Email | Password |
+## 7. Tài khoản demo
+| Vai trò | Email | Mật khẩu |
 |---|---|---|
 | Admin | admin@fitlife.com | 123456 |
 | Trainer | trainer1@fitlife.com | 123456 |
+| Trainer 2 | trainer2@fitlife.com | 123456 |
 | Member | member1@fitlife.com | 123456 |
 
-## 10. Trạng thái hiện tại
+## 8. API chính
+| Method | Endpoint | Vai trò | Mô tả |
+|---|---|---|---|
+| GET | /api/health | Public | Health check |
+| POST | /api/auth/login | Public | Đăng nhập |
+| GET | /api/auth/profile | Authenticated | Xem profile |
+| GET | /api/plans | Public | Xem danh sách gói tập |
+| POST | /api/memberships/subscribe | Member | Đăng ký gói tập |
+| GET | /api/memberships/me | Member | Xem membership của mình |
+| GET | /api/memberships | Admin | Xem toàn bộ membership |
+| GET | /api/payments/me | Member | Xem thanh toán của mình |
+| GET | /api/payments | Admin | Xem toàn bộ thanh toán |
+| GET | /api/trainers | Authenticated | Xem danh sách trainer |
+| POST | /api/schedules | Member | Đặt lịch |
+| GET | /api/schedules/me | Member | Xem lịch của mình |
+| GET | /api/schedules/trainer/me | Trainer | Xem lịch của trainer |
+| PATCH | /api/schedules/:id/status | Trainer | Cập nhật trạng thái lịch |
+| GET | /api/schedules | Admin | Xem toàn bộ lịch |
 
-- Repository đã được khởi tạo.
-- Cấu trúc thư mục cơ bản đã có sẵn.
-- Bộ tài liệu thiết kế ban đầu đang được hoàn thiện.
-- Backend, database, API và frontend sẽ được triển khai ở các sprint tiếp theo.
+## 9. Test, lint và CI
+```bash
+cd backend
+npm run lint
+npm test
+```
+GitHub Actions workflow nằm tại .github/workflows/ci.yml.
+
+## 10. Git workflow
+- main/master: nhánh chính ổn định
+- sprint-<number>: nhánh phát triển cho từng sprint
+- Pull Request: review trước khi merge
+- Commit convention: feat:, fix:, docs:, test:, chore:
+
+## 11. Tài liệu liên quan
+- [docs/01_PROJECT_OVERVIEW.md](docs/01_PROJECT_OVERVIEW.md)
+- [docs/02_DATABASE_DESIGN.md](docs/02_DATABASE_DESIGN.md)
+- [docs/03_USER_ROLES_RBAC.md](docs/03_USER_ROLES_RBAC.md)
+- [docs/04_MODULES_AND_USECASES.md](docs/04_MODULES_AND_USECASES.md)
+- [docs/05_API_DESIGN.md](docs/05_API_DESIGN.md)
+- [docs/06_DATA_MAPPING.md](docs/06_DATA_MAPPING.md)
+- [docs/07_BUSINESS_RULES.md](docs/07_BUSINESS_RULES.md)
+- [docs/08_BACKEND_GUIDE.md](docs/08_BACKEND_GUIDE.md)
+- [docs/09_FRONTEND_GUIDE.md](docs/09_FRONTEND_GUIDE.md)
+- [docs/10_TESTING_AND_DEPLOYMENT.md](docs/10_TESTING_AND_DEPLOYMENT.md)
+- [docs/11_GIT_WORKFLOW.md](docs/11_GIT_WORKFLOW.md)
+- [docs/12_SPRINT_PLAN.md](docs/12_SPRINT_PLAN.md)
+- [docs/13_FINAL_TEST_CHECKLIST.md](docs/13_FINAL_TEST_CHECKLIST.md)
+- [docs/14_DEMO_SCRIPT.md](docs/14_DEMO_SCRIPT.md)
+- [docs/15_REPORT_OUTLINE.md](docs/15_REPORT_OUTLINE.md)
+- [docs/16_TEAM_CODE_DISTRIBUTION.md](docs/16_TEAM_CODE_DISTRIBUTION.md)
+- [docs/17_SPQM_REPORT.md](docs/17_SPQM_REPORT.md)
+- [docs/18_SUBMISSION_CHECKLIST.md](docs/18_SUBMISSION_CHECKLIST.md)
+- [docs/19_MANUAL_DELIVERABLES.md](docs/19_MANUAL_DELIVERABLES.md)
+
+## 12. Checklist nộp bài
+- [x] README đầy đủ
+- [x] Backend có API chạy được
+- [x] Frontend có thể demo
+- [x] Test và lint được thiết lập
+- [x] GitHub Actions workflow có sẵn
+- [ ] Screenshot SonarQube dashboard (nếu triển khai)
+- [ ] Video demo <= 5 phút
+- [ ] Báo cáo Word/PDF (nếu giảng viên yêu cầu)
+
+## 13. Sprint 7 & Sprint 8 plan
+- Bổ sung thêm test nghiệp vụ cho membership, payment và schedule.
+- Tăng coverage trên controller phức tạp.
+- Có thể thêm SonarQube hoặc SonarCloud nếu nhóm muốn nâng cao tầng quality gate.

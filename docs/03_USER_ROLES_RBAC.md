@@ -3,9 +3,9 @@
 
 ## 1. Tổng quan
 
-Hệ thống FitLife dự kiến áp dụng mô hình phân quyền theo vai trò RBAC để kiểm soát quyền truy cập API và giao diện. Thiết kế này giúp tách biệt rõ trách nhiệm giữa Admin, Member và Trainer, đồng thời giảm rủi ro truy cập sai chức năng.
+Hệ thống FitLife áp dụng mô hình phân quyền theo vai trò RBAC để kiểm soát quyền truy cập API và giao diện. Thiết kế này giúp tách biệt rõ trách nhiệm giữa Admin, Member và Trainer, đồng thời giảm rủi ro truy cập sai chức năng.
 
-RBAC sẽ được dùng xuyên suốt ở backend và đồng bộ với luồng hiển thị của frontend trong các sprint sau.
+RBAC đang được dùng ở backend qua middleware authenticateToken và authorizeRoles, đồng bộ với luồng hiển thị của frontend.
 
 Ba vai trò chính gồm:
 
@@ -17,7 +17,7 @@ Ba vai trò chính gồm:
 
 Admin là người quản lý toàn bộ hệ thống phòng gym.
 
-### Quyền dự kiến
+### Quyền hiện có
 
 - Đăng nhập hệ thống.
 - Quản lý gói tập.
@@ -32,7 +32,7 @@ Admin là người quản lý toàn bộ hệ thống phòng gym.
 
 Member là hội viên sử dụng dịch vụ phòng gym.
 
-### Quyền dự kiến
+### Quyền hiện có
 
 - Đăng ký tài khoản.
 - Đăng nhập hệ thống.
@@ -47,14 +47,14 @@ Member là hội viên sử dụng dịch vụ phòng gym.
 
 Trainer là huấn luyện viên của phòng gym.
 
-### Quyền dự kiến
+### Quyền hiện có
 
 - Đăng nhập hệ thống.
 - Xem lịch dạy cá nhân.
 - Xác nhận lịch tập.
 - Cập nhật trạng thái buổi tập.
 
-## 5. Bảng phân quyền dự kiến
+## 5. Bảng phân quyền hiện hành
 
 | Chức năng | Admin | Member | Trainer |
 |---|---:|---:|---:|
@@ -75,23 +75,23 @@ Trainer là huấn luyện viên của phòng gym.
 | Xem payment cá nhân | Không | Có | Không |
 | Xem tất cả payment | Có | Không | Không |
 
-## 6. Cách kiểm soát quyền dự kiến
+## 6. Cách kiểm soát quyền hiện hành
 
-Backend dự kiến sẽ dùng:
+Backend đang dùng:
 
 - Middleware `authenticateToken` để kiểm tra JWT.
 - Middleware `authorizeRoles` để kiểm tra role.
 
-Ví dụ kiểm soát quyền dự kiến:
+Ví dụ kiểm soát quyền hiện hành:
 
-- `GET /api/auth/me` cần đăng nhập.
-- `POST /api/plans` chỉ dành cho Admin.
+- `GET /api/auth/profile` cần đăng nhập.
+- `GET /api/memberships` chỉ dành cho Admin.
 - `POST /api/schedules` chỉ dành cho Member.
-- `PUT /api/schedules/:id/status` dành cho Trainer hoặc Admin.
+- `PATCH /api/schedules/:id/status` chỉ dành cho Trainer.
 
-## 7. Nguyên tắc bảo mật dự kiến
+## 7. Nguyên tắc bảo mật
 
 - Không lưu mật khẩu dạng plain text.
 - Không trả `password_hash` về frontend.
-- Token dự kiến được gửi qua header `Authorization`.
+- Token được gửi qua header `Authorization`.
 - API quan trọng phải kiểm tra đăng nhập và role trước khi xử lý.

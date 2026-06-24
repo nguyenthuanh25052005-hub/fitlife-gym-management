@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Dashboard | FitLife</title>
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-wrap">
+            <a href="./index.html" class="brand">
+                <span class="brand-mark">F</span>
+                <span>FitLife</span>
+            </a>
+            <nav class="nav-links">
+                <a href="./member.html">Dashboard</a>
+                <button id="logoutButton" class="link-button" type="button">Đăng xuất</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-shell dashboard-shell-wide">
+        <section class="container dashboard-hero card">
+            <div>
+                <p class="eyebrow">Member dashboard</p>
+                <h1 id="memberName">Xin chào</h1>
+                <p id="memberEmail" class="muted"></p>
+                <p id="memberRole" class="muted"></p>
+            </div>
+            <div class="hero-summary">
+                <div class="stat-card compact">
+                    <span class="stat-label">Membership</span>
+                    <strong id="membershipCount">0</strong>
+                </div>
+                <div class="stat-card compact">
+                    <span class="stat-label">Tổng thanh toán</span>
+                    <strong id="paymentTotal">0₫</strong>
+                </div>
+                <div class="stat-card compact">
+                    <span class="stat-label">Lịch tập</span>
+                    <strong id="scheduleCount">0</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="section-heading">
+                <p class="eyebrow">Gói tập</p>
+                <h2>Đăng ký gói phù hợp mục tiêu của bạn</h2>
+            </div>
+            <div class="dashboard-grid two-col">
+                <div class="card">
+                    <h3>Danh sách gói tập</h3>
+                    <div id="planList" class="stack"></div>
+                </div>
+                <div class="card">
+                    <h3>Membership của tôi</h3>
+                    <div id="membershipList" class="stack"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="dashboard-grid two-col">
+                <div class="card">
+                    <h3>Thanh toán của tôi</h3>
+                    <div id="paymentList" class="stack"></div>
+                </div>
+                <div class="card">
+                    <h3>Huấn luyện viên</h3>
+                    <div id="trainerList" class="stack"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="dashboard-grid two-col">
+                <div class="card">
+                    <h3>Đặt lịch tập</h3>
+                    <form id="scheduleForm" class="stack">
+                        <label>
+                            Huấn luyện viên
+                            <select id="trainerSelect" required></select>
+                        </label>
+                        <label>
+                            Ngày
+                            <input id="scheduleDate" type="date" required />
+                        </label>
+                        <div class="inline-fields">
+                            <label>
+                                Giờ bắt đầu
+                                <input id="startTime" type="time" required />
+                            </label>
+                            <label>
+                                Giờ kết thúc
+                                <input id="endTime" type="time" required />
+                            </label>
+                        </div>
+                        <label>
+                            Ghi chú
+                            <textarea id="scheduleNote" rows="3" placeholder="Mục tiêu buổi tập"></textarea>
+                        </label>
+                        <button class="btn btn-primary" type="submit">Đặt lịch</button>
+                        <p id="scheduleMessage" class="message"></p>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Lịch tập của tôi</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Huấn luyện viên</th>
+                                    <th>Ngày</th>
+                                    <th>Thời gian</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/member.js"></script>
+</body>
+
+</html>

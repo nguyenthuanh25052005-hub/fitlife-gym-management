@@ -1,0 +1,42 @@
+name: FitLife CI
+
+on:
+  push:
+    branches:
+      - main
+      - sprint-07-testing-ci
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Initialize database
+        run: npm run db:init
+
+      - name: Seed database
+        run: npm run db:seed
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run tests with coverage
+        run: npm test

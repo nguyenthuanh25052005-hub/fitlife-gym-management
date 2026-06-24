@@ -10,7 +10,7 @@ cd backend
 npm install
 npm run db:init
 npm run db:seed
-npm run dev
+npm start
 ```
 
 ### Frontend
@@ -21,106 +21,66 @@ Mở frontend bằng Live Server hoặc mở trực tiếp file:
 frontend/index.html
 ```
 
-## 2. Demo Admin
+## 2. Kịch bản demo UI
 
-### Bước 1: Đăng nhập
+### Bước 1: Mở trang chủ
 
-Tài khoản dự kiến:
+- Mở [frontend/index.html](../frontend/index.html).
+- Quan sát hero section rộng, các card vai trò và nút đăng nhập nổi bật trên toàn màn hình.
+- Nhấn "Bắt đầu demo" để chuyển sang trang login.
 
-- Email: `admin@fitlife.com`
-- Password: `123456`
+### Bước 2: Login member
 
-### Bước 2: Quản lý gói tập
+- Sử dụng tài khoản member: `member1@fitlife.com / 123456`.
+- Sau khi đăng nhập, hệ thống chuyển sang [frontend/member.html](../frontend/member.html).
+- Quan sát phần thông tin user và các thống kê nhanh.
 
-- Mở Admin Dashboard.
-- Xem danh sách gói tập.
-- Thêm gói tập mới.
-- Sửa thông tin gói tập.
-- Xóa mềm gói tập.
+### Bước 3: Member xem gói tập và đăng ký
 
-### Bước 3: Xem đăng ký và thanh toán
+- Xem danh sách các gói tập.
+- Nhấn nút "Đăng ký ngay" cho một gói phù hợp.
+- Quan sát membership mới được hiển thị.
 
-- Xem danh sách membership.
-- Xem danh sách payment.
-- Xem toàn bộ lịch tập.
+### Bước 4: Member xem membership/payment/trainer
 
-## 3. Demo Member
+- Kiểm tra section membership của tôi.
+- Xem thanh toán đã tạo.
+- Xem danh sách trainer và thông tin chuyên môn của họ.
 
-### Bước 1: Đăng ký tài khoản
+### Bước 5: Member đặt lịch
 
-- Mở trang register.
-- Nhập họ tên, email, password, phone.
-- Tạo tài khoản member.
+- Chọn trainer, ngày, giờ và ghi chú.
+- Bấm "Đặt lịch".
+- Xem lịch tập mới xuất hiện trong bảng lịch của tôi.
 
-### Bước 2: Đăng nhập
+### Bước 6: Login trainer
 
-- Mở trang login.
-- Đăng nhập bằng tài khoản vừa tạo.
-- Hệ thống điều hướng vào member dashboard.
+- Đăng xuất và đăng nhập bằng `trainer1@fitlife.com / 123456`.
+- Hệ thống chuyển sang [frontend/trainer.html](../frontend/trainer.html).
+- Xem danh sách lịch tập được giao.
 
-### Bước 3: Đăng ký gói tập
+### Bước 7: Trainer xác nhận lịch
 
-- Xem danh sách gói tập.
-- Chọn gói Basic, Standard hoặc Premium.
-- Bấm đăng ký.
-- Kiểm tra gói hiện tại.
+- Nhấn nút "Xác nhận", "Hoàn thành" hoặc "Hủy" tương ứng.
+- Quan sát trạng thái trên bảng thay đổi.
 
-### Bước 4: Đặt lịch tập
+### Bước 8: Login admin
 
-- Xem danh sách trainer.
-- Chọn trainer.
-- Chọn ngày và giờ.
-- Bấm đặt lịch.
-- Xem lịch cá nhân.
+- Đăng xuất và đăng nhập bằng `admin@fitlife.com / 123456`.
+- Hệ thống chuyển sang [frontend/admin.html](../frontend/admin.html).
+- Xem các card thống kê tổng quan.
 
-## 4. Demo Trainer
+### Bước 9: Admin xem dữ liệu hệ thống
 
-### Bước 1: Đăng nhập
+- Xem bảng memberships.
+- Xem bảng payments.
+- Xem bảng schedules.
+- Nhấn mạnh rằng dữ liệu được render trực tiếp từ API backend.
 
-Tài khoản dự kiến:
-
-- Email: `trainer1@fitlife.com`
-- Password: `123456`
-
-### Bước 2: Xem lịch dạy
-
-- Mở trainer dashboard.
-- Xem danh sách lịch `pending`.
-
-### Bước 3: Xác nhận lịch
-
-- Chọn lịch phù hợp.
-- Cập nhật status thành `confirmed`.
-- Kiểm tra lại bên member.
-
-## 5. Demo Testing
-
-Chạy:
-
-```bash
-cd backend
-npm test
-```
-
-## 6. Demo ESLint
-
-Chạy:
-
-```bash
-cd backend
-npm run lint
-```
-
-## 7. Demo GitHub Actions
-
-- Mở tab Actions trên GitHub.
-- Kiểm tra workflow CI.
-- Xác nhận lint và test pass.
-
-## 8. Tài khoản demo dự kiến
+## 3. Tài khoản demo
 
 | Vai trò | Email | Password |
 |---|---|---|
-| Admin | `admin@fitlife.com` | `123456` |
-| Trainer | `trainer1@fitlife.com` | `123456` |
-| Member | `member1@fitlife.com` | `123456` |
+| Admin | admin@fitlife.com | 123456 |
+| Trainer | trainer1@fitlife.com | 123456 |
+| Member | member1@fitlife.com | 123456 |

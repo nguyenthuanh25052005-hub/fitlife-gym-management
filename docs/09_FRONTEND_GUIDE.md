@@ -3,113 +3,111 @@
 
 ## 1. Tổng quan frontend
 
-Frontend dự kiến sử dụng HTML, CSS và JavaScript thuần. Giao diện sẽ gọi REST API từ backend bằng `fetch`, đồng thời lưu token đăng nhập để dùng cho các trang cần xác thực.
+Frontend của FitLife được xây dựng bằng HTML, CSS và JavaScript thuần, không dùng framework. Giao diện được thiết kế để vừa chạy trực tiếp bằng Live Server, vừa phù hợp cho việc thuyết trình và demo đồ án quản lý phòng gym.
 
-## 2. Cấu trúc frontend dự kiến
+## 2. Cấu trúc thư mục frontend
 
 ```text
 frontend/
 ├── index.html
 ├── login.html
-├── register.html
-├── member-dashboard.html
-├── admin-dashboard.html
-├── trainer-dashboard.html
+├── member.html
+├── trainer.html
+├── admin.html
 ├── css/
 │   └── style.css
 └── js/
     ├── api.js
     ├── auth.js
     ├── member.js
-    ├── admin.js
-    └── trainer.js
+    ├── trainer.js
+    └── admin.js
 ```
 
-## 3. Các trang chính
+## 3. Các trang giao diện
 
 | Trang | Mục đích |
 |---|---|
-| `index.html` | Trang giới thiệu dự án và xem gói tập |
-| `register.html` | Trang đăng ký member |
-| `login.html` | Trang đăng nhập |
-| `member-dashboard.html` | Dashboard dành cho hội viên |
-| `admin-dashboard.html` | Dashboard dành cho admin |
-| `trainer-dashboard.html` | Dashboard dành cho trainer |
+| `index.html` | Trang chủ giới thiệu hệ thống và tài khoản demo |
+| `login.html` | Trang đăng nhập cho member, trainer và admin |
+| `member.html` | Dashboard dành cho member |
+| `trainer.html` | Dashboard dành cho trainer |
+| `admin.html` | Dashboard dành cho admin |
 
-## 4. Cách gọi API bằng `fetch`
+## 4. Luồng đăng nhập theo role
 
-Frontend dự kiến gọi API theo kiểu sau:
+Sau khi đăng nhập thành công, frontend sẽ lưu token và thông tin user vào localStorage, sau đó điều hướng theo role:
+
+| Role | Trang đích |
+|---|---|
+| `member` | `member.html` |
+| `trainer` | `trainer.html` |
+| `admin` | `admin.html` |
+
+## 5. Cách frontend gọi API bằng fetch
+
+Frontend gọi backend qua file [frontend/js/api.js](../frontend/js/api.js). Mỗi request sử dụng `fetch` và tự động thêm header `Authorization` khi có token.
 
 ```js
-const response = await fetch("http://localhost:3000/api/plans");
-const data = await response.json();
-```
-
-## 5. Cách gửi token `Authorization`
-
-Các API cần đăng nhập sẽ gửi token trong header `Authorization`:
-
-```js
-const token = localStorage.getItem("token");
-
-fetch("http://localhost:3000/api/auth/me", {
+const response = await fetch("http://127.0.0.1:3000/api/plans", {
   headers: {
     Authorization: `Bearer ${token}`
   }
 });
+const data = await response.json();
 ```
 
-## 6. Cách lưu token vào `localStorage`
+## 6. Cách lưu token và session
 
-Sau khi login thành công, frontend dự kiến lưu token và thông tin user như sau:
+Sau khi login thành công, frontend lưu dữ liệu như sau:
 
 ```js
-localStorage.setItem("token", data.token);
-localStorage.setItem("user", JSON.stringify(data.user));
+localStorage.setItem("fitlife_token", token);
+localStorage.setItem("fitlife_user", JSON.stringify(user));
 ```
 
-## 7. Điều hướng theo role
+## 7. Cách chạy frontend bằng Live Server
 
-Sau khi login, frontend sẽ chuyển hướng theo role:
+1. Khởi động backend:
+   ```bash
+   cd backend
+   npm start
+   ```
+2. Mở thư mục frontend trong VS Code.
+3. Nhấn chuột phải vào [frontend/index.html](../frontend/index.html) và chọn "Open with Live Server".
+4. Truy cập giao diện qua URL của Live Server.
 
-| Role | Trang đích |
-|---|---|
-| Admin | `admin-dashboard.html` |
-| Member | `member-dashboard.html` |
-| Trainer | `trainer-dashboard.html` |
+## 8. Tài khoản demo
 
-## 8. Chức năng của từng dashboard
+| Vai trò | Email | Mật khẩu |
+|---|---|---|
+| Admin | admin@fitlife.com | 123456 |
+| Trainer | trainer1@fitlife.com | 123456 |
+| Member | member1@fitlife.com | 123456 |
 
-### Member Dashboard
+## 9. Chức năng chính theo từng role
 
-| Chức năng | Mô tả |
-|---|---|
-| Xem thông tin cá nhân | Hiển thị hồ sơ và trạng thái tài khoản |
-| Xem danh sách gói tập | Xem các plan đang hoạt động |
-| Đăng ký gói tập | Chọn plan và gửi yêu cầu subscribe |
-| Xem trainer | Xem danh sách huấn luyện viên |
-| Đặt lịch tập | Tạo lịch với trainer phù hợp |
-| Xem lịch cá nhân | Theo dõi các buổi tập đã đặt |
+### Member
 
-### Admin Dashboard
+- Xem danh sách gói tập
+- Đăng ký membership
+- Xem thanh toán của mình
+- Xem danh sách trainer
+- Đặt lịch tập
+- Xem lịch tập cá nhân
 
-| Chức năng | Mô tả |
-|---|---|
-| Quản lý gói tập | Thêm, sửa, xóa hoặc vô hiệu hóa plan |
-| Xem membership | Theo dõi các đăng ký gói tập |
-| Xem payment | Xem các payment mô phỏng |
-| Xem schedule | Quản lý toàn bộ lịch tập |
-| Quản lý trainer | Thêm, sửa, xóa trainer |
+### Trainer
 
-### Trainer Dashboard
+- Xem các lịch được giao
+- Xác nhận lịch tập
+- Hoàn thành hoặc hủy lịch tập
 
-| Chức năng | Mô tả |
-|---|---|
-| Xem lịch dạy | Xem các buổi tập được gán cho trainer |
-| Xác nhận lịch | Chuyển lịch từ pending sang confirmed |
-| Cập nhật trạng thái lịch | Đổi trạng thái sang completed hoặc cancelled khi phù hợp |
+### Admin
 
-## 9. Ghi chú
+- Xem toàn bộ membership
+- Xem toàn bộ payments
+- Xem toàn bộ schedules
 
-- Frontend chưa được triển khai ở giai đoạn tài liệu ban đầu.
-- Mô tả trong tài liệu này là dự kiến và sẽ được cập nhật khi giao diện được tạo ở các sprint sau.
+## 10. Ghi chú thiết kế
+
+Giao diện đã được tối ưu hóa cho màn hình rộng với layout gần full screen, container lớn, card nổi bật và font chữ rõ ràng. Trang login, landing page, member/trainer/admin dashboard đều được thiết kế để nhìn to, sáng và chuyên nghiệp hơn khi thuyết trình hoặc chiếu projector.
