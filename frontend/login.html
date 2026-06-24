@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập | FitLife</title>
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body class="page-auth">
+    <header class="navbar">
+        <div class="container nav-wrap">
+            <a href="./index.html" class="brand">
+                <span class="brand-mark">F</span>
+                <span>FitLife</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="auth-page">
+        <div class="container auth-card">
+            <div class="auth-intro card">
+                <p class="eyebrow">FitLife Gym Management</p>
+                <h1>Chào mừng trở lại</h1>
+                <p>Đăng nhập để khám phá dashboard cho member, trainer và admin trong một trải nghiệm hiện đại, rõ ràng
+                    và phù hợp cho demo đồ án.</p>
+                <div class="demo-card">
+                    <h3>Tài khoản demo</h3>
+                    <ul>
+                        <li><strong>Admin:</strong> admin@fitlife.com / 123456</li>
+                        <li><strong>Trainer:</strong> trainer1@fitlife.com / 123456</li>
+                        <li><strong>Member:</strong> member1@fitlife.com / 123456</li>
+                    </ul>
+                </div>
+            </div>
+
+            <form id="loginForm" class="form-card">
+                <h2>Đăng nhập</h2>
+                <label>
+                    Email
+                    <input id="email" name="email" type="email" placeholder="admin@fitlife.com" required />
+                </label>
+                <label>
+                    Mật khẩu
+                    <input id="password" name="password" type="password" placeholder="123456" required />
+                </label>
+                <button class="btn btn-primary full-width" type="submit">Đăng nhập</button>
+                <p id="loginMessage" class="message" role="status"></p>
+            </form>
+        </div>
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const auth = window.FitLifeAuth;
+            if (auth.isAuthenticated()) {
+                auth.redirectByRole(auth.getStoredUser().role);
+                return;
+            }
+
+            const form = document.getElementById('loginForm');
+            const message = document.getElementById('loginMessage');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                message.textContent = 'Đang đăng nhập...';
+                message.className = 'message info';
+
+                try {
+                    const data = await window.FitLifeAPI.post('/auth/login', { email, password });
+                    auth.saveSession(data.token, data.user);
+                    auth.redirectByRole(data.user.role);
+                } catch (error) {
+                    message.textContent = error.message;
+                    message.className = 'message error';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

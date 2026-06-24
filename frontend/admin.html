@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | FitLife</title>
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-wrap">
+            <a href="./index.html" class="brand">
+                <span class="brand-mark">F</span>
+                <span>FitLife</span>
+            </a>
+            <nav class="nav-links">
+                <a href="./admin.html">Dashboard</a>
+                <button id="logoutButton" class="link-button" type="button">Đăng xuất</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-shell dashboard-shell-wide">
+        <section class="container dashboard-hero card">
+            <div>
+                <p class="eyebrow">Admin dashboard</p>
+                <h1 id="adminName">Xin chào</h1>
+                <p id="adminEmail" class="muted"></p>
+            </div>
+            <div class="hero-summary">
+                <div class="stat-card compact">
+                    <span class="stat-label">Membership</span>
+                    <strong id="membershipTotal">0</strong>
+                </div>
+                <div class="stat-card compact">
+                    <span class="stat-label">Payments</span>
+                    <strong id="paymentTotal">0</strong>
+                </div>
+                <div class="stat-card compact">
+                    <span class="stat-label">Schedules</span>
+                    <strong id="scheduleTotal">0</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="card">
+                <div class="section-heading">
+                    <p class="eyebrow">Membership</p>
+                    <h2>Danh sách đăng ký gói tập</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thành viên</th>
+                                <th>Gói tập</th>
+                                <th>Giá</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membershipTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="card">
+                <div class="section-heading">
+                    <p class="eyebrow">Payments</p>
+                    <h2>Danh sách thanh toán</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thành viên</th>
+                                <th>Số tiền</th>
+                                <th>Phương thức</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-block">
+            <div class="card">
+                <div class="section-heading">
+                    <p class="eyebrow">Schedules</p>
+                    <h2>Toàn bộ lịch tập trong hệ thống</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Trainer</th>
+                                <th>Ngày</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/admin.js"></script>
+</body>
+
+</html>
