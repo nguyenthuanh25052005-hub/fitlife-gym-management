@@ -165,6 +165,8 @@ describe("FitLife API - Authentication and RBAC", () => {
 });
 
 describe("FitLife API - Plans", () => {
+  let createdPlanId;
+
   test("GET /api/plans returns active plans", async () => {
     const response = await request(app).get("/api/plans");
 
@@ -173,10 +175,144 @@ describe("FitLife API - Plans", () => {
     expect(response.body.plans.length).toBeGreaterThan(0);
   });
 
-  test("GET /api/plans/1 returns one plan or valid response", async () => {
+  test("GET /api/plans/1 returns one plan", async () => {
     const response = await request(app).get("/api/plans/1");
 
-    expect([200, 404]).toContain(response.status);
+    expect(response.status).toBe(200);
+    expect(response.body.plan).toBeDefined();
+    expect(response.body.plan.id).toBe(1);
+  });
+
+  test("GET /api/plans/99999 returns 404", async () => {
+    const response = await request(app).get("/api/plans/99999");
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Membership plan not found");
+  });
+
+  test("POST /api/plans blocks unauthenticated request", async () => {
+    const response = await request(app)
+      .post("/api/plans")
+      .send({
+        name: "Test Plan No Auth",
+        price: 100000,
+        durationDays: 30,
+        description: "No auth test",
+        status: "active"
+      });
+
+    expect(response.status).toBe(401);
+  });
+
+  test("POST /api/plans blocks member role", async () => {
+    const response = await request(app)
+      .post("/api/plans")
+      .set("Authorization", `Bearer ${memberToken}`)
+      .send({
+        name: "Test Plan Member",
+        price: 100000,
+        durationDays: 30,
+        description: "Member role test",
+        status: "active"
+      });
+
+    expect(response.status).toBe(403);
+  });
+
+  test("POST /api/plans returns 400 when required data is missing", async () => {
+    const response = await request(app)
+      .post("/api/plans")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Invalid Plan"
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Name, price, and durationDays are required");
+  });
+
+  test("POST /api/plans creates a new plan for admin", async () => {
+    const response = await request(app)
+      .post("/api/plans")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: `Automated Test Plan ${Date.now()}`,
+        price: 350000,
+        durationDays: 45,
+        description: "Created by automated test",
+        status: "active"
+      });
+
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe("Membership plan created successfully");
+    expect(response.body.plan).toBeDefined();
+    expect(response.body.plan.name).toContain("Automated Test Plan");
+
+    createdPlanId = response.body.plan.id;
+  });
+
+  test("PUT /api/plans/:id returns 404 for missing plan", async () => {
+    const response = await request(app)
+      .put("/api/plans/99999")
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Missing Plan",
+        price: 200000,
+        durationDays: 30,
+        description: "Missing",
+        status: "active"
+      });
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Membership plan not found");
+  });
+
+  test("PUT /api/plans/:id returns 400 when required data is missing", async () => {
+    const response = await request(app)
+      .put(`/api/plans/${createdPlanId}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Invalid Update"
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Name, price, and durationDays are required");
+  });
+
+  test("PUT /api/plans/:id updates plan for admin", async () => {
+    const response = await request(app)
+      .put(`/api/plans/${createdPlanId}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({
+        name: "Updated Automated Plan",
+        price: 400000,
+        durationDays: 60,
+        description: "Updated by automated test",
+        status: "active"
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Membership plan updated successfully");
+    expect(response.body.plan.name).toBe("Updated Automated Plan");
+    expect(response.body.plan.price).toBe(400000);
+  });
+
+  test("DELETE /api/plans/:id returns 404 for missing plan", async () => {
+    const response = await request(app)
+      .delete("/api/plans/99999")
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Membership plan not found");
+  });
+
+  test("DELETE /api/plans/:id deactivates plan for admin", async () => {
+    const response = await request(app)
+      .delete(`/api/plans/${createdPlanId}`)
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Membership plan deactivated successfully");
   });
 });
 
